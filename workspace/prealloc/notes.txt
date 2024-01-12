@@ -1,0 +1,6 @@
+Idea for preallocating:
+
+Make Linked list with Zones.
+
+Zones contain the biggest gap left. (amount of bytes that can be put into it)
+

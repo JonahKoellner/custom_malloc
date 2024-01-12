@@ -10,17 +10,18 @@
 #define MAP_ANONYMOUS 0x20 // cant find MAP_ANONYMOUS in sys/mman.h in this system
 #endif
 
-enum zone{ LARGE = 1, SMALL = 2, TINY = 3 };
+#define ZONE_SMALL_FACTOR 2
+#define ZONE_TINY_FACTOR 16
 
 // Calculate the zone size for the given size
 size_t zone_calc(size_t size) {
 	int ps = getpagesize();
 
-	if (size <= (unsigned long)(ps / TINY)) {
-		return (ps / TINY);
+	if (size <= (unsigned long)(ps / ZONE_TINY_FACTOR)) {
+		return (ps / ZONE_TINY_FACTOR);
 	}
-	if (size <= (unsigned long)(ps / SMALL)) {
-		return (ps / SMALL);
+	if (size <= (unsigned long)(ps / ZONE_SMALL_FACTOR)) {
+		return (ps / ZONE_SMALL_FACTOR);
 	}
 	return (size);
 }
@@ -33,7 +34,7 @@ void *malloc(size_t size) {
 	size_t zone_size = zone_calc(size);
 	size_t *ptr = mmap(NULL, zone_size + sizeof(size_t), PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
 	if (ptr == MAP_FAILED) {
-		return NULL;
+		return (NULL);
 	}
 	(*ptr) = zone_size;
 	return (void *)(ptr + 1);
@@ -57,7 +58,7 @@ int main(void) {
 	void *ptr_mid = malloc(2000);
 	void *ptr_large = malloc(2000000);
 
-	if (ptr == NULL) {
+	if (ptr == (NULL)) {
 		return (1);
 	}
 	printf("ptr = %p\n", ptr);

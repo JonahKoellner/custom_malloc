@@ -10,7 +10,7 @@
 
 // version to save [size][allocatedmemory]
 void *malloc(size_t size) {
-	size_t *ptr = mmap(NULL, size + sizeof(size_t), PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
+	size_t *ptr = mmap((void*) 0x032FA, size + sizeof(size_t), PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS | MAP_FIXED, -1, 0);
 	if (ptr == MAP_FAILED) {
 		return NULL;
 	}
@@ -30,10 +30,12 @@ int main(void) {
 	 * Allocation Test
 	*/
 	void *ptr = malloc(10);
-	if (ptr == NULL) {
-		return (1);
+	void *ptr2 = malloc(10);
+	if (ptr == NULL || ptr2 == NULL) {
+		return (printf("malloc error\n"), 1);
 	}
 	printf("ptr = %p\n", ptr);
+	printf("ptr2 = %p\n", ptr2);
 
 	/**
 	 * Accessing allocated memory Test
@@ -43,6 +45,7 @@ int main(void) {
 		((char *)ptr)[i] = i + '0';
 		i++;
 	}
+	((char *)ptr2)[2] = '0';
 	i = 0;
 	while (i < 10) {
 		printf("%c\n", ((char *)ptr)[i]);
