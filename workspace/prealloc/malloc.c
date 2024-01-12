@@ -1,17 +1,5 @@
-#include <sys/mman.h> // mmap(), munmap()
-#include <stddef.h> // size_t, NULL
-#include <unistd.h> //getpagesize(),
+#include "malloc.h"
 
-
-#include <stdio.h> // remove after debugging
-
-
-#ifndef MAP_ANONYMOUS
-#define MAP_ANONYMOUS 0x20 // cant find MAP_ANONYMOUS in sys/mman.h in this system
-#endif
-
-#define ZONE_SMALL_FACTOR 2
-#define ZONE_TINY_FACTOR 16
 
 // Calculate the zone size for the given size
 size_t zone_calc(size_t size) {
@@ -50,43 +38,3 @@ void free(void *ptr) {
 	munmap(realptr, *realptr + sizeof(size_t));
 }
 
-int main(void) {
-	/**
-	 * Allocation Test
-	*/
-	void *ptr = malloc(10);
-	void *ptr_mid = malloc(2000);
-	void *ptr_large = malloc(2000000);
-
-	if (ptr == (NULL)) {
-		return (1);
-	}
-	printf("ptr = %p\n", ptr);
-
-	/**
-	 * Accessing allocated memory Test
-	*/
-	int i = 0;
-	while (i < 12) {
-		((char *)ptr)[i] = i + '0';
-		i++;
-	}
-	i = 0;
-	while (i < 15) {
-		printf("%d\n", ((char *)ptr)[i]);
-		i++;
-	}
-
-	/**
-	 * Free Test
-	*/
-	free(ptr);
-	free(ptr_mid);
-	free(ptr_large);
-	free(NULL); //NOop
-	//free(ptr); // free error
-
-	printf("%d\n", getpagesize());
-
-	return (0);
-}

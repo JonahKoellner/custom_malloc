@@ -1,5 +1,5 @@
 {
-	"name": "C/Rust Development",
+	"name": "C Development",
 	"dockerFile": "Dockerfile",
 	"customizations": {
 		"vscode": {
@@ -8,10 +8,10 @@
 
 			},
 			"extensions": [
-				"ms-vscode.cpptools",
-				"rust-lang.rust-analyzer"
+				"ms-vscode.cpptools"
+				//"rust-lang.rust-analyzer"
 			]
 		}
 	},
-	"workspaceFolder": "/workspaces/malloc/workspace"
+	"workspaceFolder": "/workspaces/custom_malloc/workspace"
 }
