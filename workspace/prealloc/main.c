@@ -43,7 +43,6 @@ int main(void) {
 	/**
 	 * Linked list test
 	*/
-
 	t_list *list = ft_lstnew("Hello");
 	ft_lstadd_back(&list, ft_lstnew("World"));
 	ft_lstadd_back(&list, ft_lstnew("!!!"));

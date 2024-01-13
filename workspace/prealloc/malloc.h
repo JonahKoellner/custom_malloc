@@ -16,9 +16,31 @@
 #define ZONE_SMALL_FACTOR 2
 #define ZONE_TINY_FACTOR 16
 
-/** Function Definitions*/
+/** Function Definitions */
 void free(void *ptr);
 void *malloc(size_t size);
+
+/**
+/** Structs **\/
+typedef struct s_zone {
+	void *ptr;
+	size_t size;
+	t_block *block;
+} t_zone;
+
+typedef struct s_block {
+	void *ptr;
+	size_t size;
+	struct s_block *next;
+} t_block;
+*/
+
+typedef struct s_linkStorage {
+	void *ptr;
+	size_t size;
+	struct s_linkStorage *next;
+	struct s_linkStorage *blocks; //will be NULL when its a block (doing it like this saves allocation by 1 when creating a zone or block)
+} t_linkStorage;
 
 #endif
 
