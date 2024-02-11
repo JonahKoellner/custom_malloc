@@ -40,14 +40,5 @@ int main(void) {
 	free(NULL); //NOop
 	//free(ptr); // free error
 
-	/**
-	 * Linked list test
-	*/
-	t_list *list = ft_lstnew("Hello");
-	ft_lstadd_back(&list, ft_lstnew("World"));
-	ft_lstadd_back(&list, ft_lstnew("!!!"));
-
-	ft_lstiter(list, testfunction);
-
 	return (0);
 }

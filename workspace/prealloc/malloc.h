@@ -6,7 +6,6 @@
 #include <stddef.h> // size_t, NULL
 #include <unistd.h> //getpagesize(),
 #include <stdio.h> // TODO: remove after debugging
-#include "linked_list/linked_list.h" // t_list
 
 /** Macro Defines */
 #ifndef MAP_ANONYMOUS
@@ -20,27 +19,16 @@
 void free(void *ptr);
 void *malloc(size_t size);
 
-/**
-/** Structs **\/
-typedef struct s_zone {
-	void *ptr;
-	size_t size;
-	t_block *block;
-} t_zone;
+/** Vector Functions*/
+t_storage *_create_storage_vector(size_t size);
+t_storage *_realloc_storage_vector(t_storage *old_vector, size_t new_size);
 
-typedef struct s_block {
+typedef struct s_storage {
 	void *ptr;
 	size_t size;
-	struct s_block *next;
-} t_block;
-*/
-
-typedef struct s_linkStorage {
-	void *ptr;
-	size_t size;
-	struct s_linkStorage *next;
-	struct s_linkStorage *blocks; //will be NULL when its a block (doing it like this saves allocation by 1 when creating a zone or block)
-} t_linkStorage;
+	struct s_storage *next;
+	struct s_storage *blocks; //will be NULL when its a block (doing it like this saves allocation by 1 when creating a zone or block)
+} t_storage;
 
 #endif
 
