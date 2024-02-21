@@ -15,15 +15,16 @@
 #define ZONE_SMALL_FACTOR 2
 #define ZONE_TINY_FACTOR 16
 
-/** Function Definitions */
+/** Main Function Declarations */
 void free(void *ptr);
 void *malloc(size_t size);
 
-/** Vector Functions*/
+/** Vector Function Declarations*/
 t_alloc* alloc_extend(t_alloc *vector, size_t *size); // if vector is NULL new vector is created; if vector has value it is extended
 t_zone* zone_extend(t_zone *vector, size_t *size); // if vector is NULL new vector is created; if vector has value it is extended
 
-/** Helper Function Zones */
+/** Zone Helper Function Declarations */
+// On any error returns NULL
 t_zone *find_zone(size_t size); // finds a zone with enough space for size (if no zone found calls zone_extend and give back the first new zone)
 void *get_memory(t_zone *zone, size_t size); // takes zone and gets part of zone_memory for user. If zone memory null it creates new zone_mem
 

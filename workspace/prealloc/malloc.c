@@ -1,6 +1,6 @@
 #include "malloc.h"
 
-t_storage *g_zones = NULL;
+t_storage*	storage = NULL;
 
 // Calculate the zone size for the given size
 size_t zone_calc(size_t size) {
@@ -15,4 +15,16 @@ size_t zone_calc(size_t size) {
 	return (size);
 }
 
-
+void*	malloc(size_t size) {
+	if (size == 0) {
+		return (NULL);
+	}
+	if (storage == NULL) {
+		init_storage();
+	}
+	t_zone *zone = find_zone(size);
+	if (zone == NULL) {
+		return (NULL);
+	}
+	return (get_memory(zone, size));
+}

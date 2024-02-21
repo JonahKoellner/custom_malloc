@@ -8,16 +8,8 @@ endif
 
 NAME = libft_malloc_$(HOSTTYPE).so
 
-LINKED_LIST := linked_list
-
-# LINKED_LIST
-LINKED_LISTCFILES := ft_lstadd_back.c ft_lstadd_front.c   \
-		    ft_lstclear.c ft_lstdelone.c ft_lstiter.c 				\
-			ft_lstlast.c ft_lstmap.c ft_lstnew.c ft_lstsize.c
-LINKED_LISTCFILES := $(addprefix $(LINKED_LIST)/, $(LINKED_LISTCFILES))
-
 # LIBS
-CFILES := $(LINKED_LISTCFILES)
+CFILES := malloc.c vector_functions.c
 OFILES := $(CFILES:.c=.o)
 
 all: $(NAME)
