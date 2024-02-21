@@ -20,15 +20,28 @@ void free(void *ptr);
 void *malloc(size_t size);
 
 /** Vector Functions*/
-t_storage *_create_storage_vector(size_t size);
-t_storage *_realloc_storage_vector(t_storage *old_vector, size_t new_size);
+t_alloc* alloc_extend(t_alloc *vector, size_t *size); // if vector is NULL new vector is created; if vector has value it is extended
+t_zone* zone_extend(t_zone *vector, size_t *size); // if vector is NULL new vector is created; if vector has value it is extended
+
+/** Helper Function Zones */
+t_zone *find_zone(size_t size); // finds a zone with enough space for size (if no zone found calls zone_extend and give back the first new zone)
+void *get_memory(t_zone *zone, size_t size); // takes zone and gets part of zone_memory for user. If zone memory null it creates new zone_mem
 
 typedef struct s_storage {
-	void *ptr;
-	size_t size;
-	struct s_storage *next;
-	struct s_storage *blocks; //will be NULL when its a block (doing it like this saves allocation by 1 when creating a zone or block)
-} t_storage;
+	t_zone*	zone;
+	size_t	capacity;
+}	t_storage;
+
+typedef struct s_alloc {
+	void*	start_address;
+	size_t	size;
+}	t_alloc;
+
+typedef struct s_zone {
+	t_alloc	*alloced;
+	void	*memory;
+	size_t	total_size;
+	size_t	biggest_space_available;
+}	t_zone;
 
 #endif
-
